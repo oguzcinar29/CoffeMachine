@@ -1,0 +1,139 @@
+from menu import MENU
+
+#COFFE TYPES
+ESP="espresso"
+LATTE="latte"
+CAP="cappuccino"
+ING="ingredients"
+WATER="water"
+COFFE="coffee"
+MILK="milk"
+
+#MONEYS
+QUART=0.25
+DIMES=0.10
+NICKEL=0.05
+PENNIES=0.01
+
+#TOTAL INGREDT
+TOTAL_WATER=300
+TOTAL_MILK=200
+TOTAL_COFFEE=100
+TOTAL_MONEY=0
+
+def print_total():
+    print(f"Total water: {TOTAL_WATER}")
+    print(f"Total milk: {TOTAL_MILK}")
+    print(f"Total coffee: {TOTAL_COFFEE}")
+    print(f"Total money: {TOTAL_MONEY}")
+    
+def coins_enough(cho):
+    global TOTAL_COFFEE,TOTAL_MILK,TOTAL_WATER,TOTAL_MONEY
+    print("Please insert coins")
+    qu=int(input("How many quarters"))
+    di=int(input("How many dimes"))
+    ni=int(input("How many nickel"))
+    pen=int(input("How many penies"))
+    total=(qu*0.25)+(di*0.1)+(ni*0.05)+(pen*0.01)
+    if cho=="espresso":
+        if MENU[ESP]["cost"]<=total:
+            total-=MENU[ESP]["cost"]
+            print(f"Here is {round(total,2)} in change.")
+            TOTAL_COFFEE-=MENU[ESP][ING][COFFE]
+            TOTAL_WATER-=MENU[ESP][ING][WATER]
+            TOTAL_MONEY+=MENU[ESP]["cost"]
+            return True
+        else:
+            print("Sorry thats not enough money. Money refunded.")
+            return False
+    if cho=="latte":
+        if MENU[LATTE]["cost"]<=total:
+            total-=MENU[LATTE]["cost"]
+            print(f"Here is {round(total,2)} in change.")
+            TOTAL_COFFEE-=MENU[LATTE][ING][COFFE]
+            TOTAL_WATER-=MENU[LATTE][ING][WATER]
+            TOTAL_MILK-=MENU[LATTE][ING][MILK]
+            TOTAL_MONEY+=MENU[LATTE]["cost"]
+            return True
+        else:
+            print("Sorry thats not enough money. Money refunded.")
+            return False
+    if cho=="cappuccino":
+        if MENU[CAP]["cost"]<=total:
+            total-=MENU[CAP]["cost"]
+            print(f"Here is {round(total,2)} in change.")
+            TOTAL_COFFEE-=MENU[CAP][ING][COFFE]
+            TOTAL_WATER-=MENU[CAP][ING][WATER]
+            TOTAL_MILK-=MENU[CAP][ING][MILK]
+            TOTAL_MONEY+=MENU[CAP]["cost"]
+            return True
+        else:
+            print("Sorry thats not enough money. Money refunded.")
+            return False
+    
+    
+        
+        
+    
+def is_have(choise):
+    if choise=="cappuccino":
+        if TOTAL_COFFEE>=MENU[CAP][ING][COFFE] and TOTAL_WATER>=MENU[CAP][ING][WATER] and TOTAL_MILK>=MENU[CAP][ING][MILK]:
+            return True
+        else:
+            if TOTAL_COFFEE<MENU[CAP][ING][COFFE]:
+                print("Sorry not enough coffe")
+            if TOTAL_WATER<MENU[CAP][ING][WATER]:
+                print("Sorry not enough water")
+            if TOTAL_MILK<MENU[CAP][ING][MILK]:
+                print("Sorry not enough milk")
+            return False
+    elif choise=="latte":
+        if TOTAL_COFFEE>=MENU[LATTE][ING][COFFE] and TOTAL_WATER>=MENU[LATTE][ING][WATER] and TOTAL_MILK>=MENU[LATTE][ING][MILK]:
+            return True
+        else:
+            if TOTAL_COFFEE<MENU[LATTE][ING][COFFE]:
+                print("Sorry not enough coffe")
+            if TOTAL_WATER<MENU[LATTE][ING][WATER]:
+                print("Sorry not enough water")
+            if TOTAL_MILK<MENU[LATTE][ING][MILK]:
+                print("Sorry not enough milk")
+            return False        
+    elif choise=="espresso":
+        if TOTAL_COFFEE>=MENU[ESP][ING][COFFE] and TOTAL_WATER>=MENU[ESP][ING][WATER]:
+            return True
+        else:
+            if TOTAL_COFFEE<MENU[ESP][ING][COFFE]:
+                print("Sorry not enough coffe")
+            if TOTAL_WATER<MENU[ESP][ING][WATER]:
+                print("Sorry not enough water")
+            return False
+        
+
+
+flag=True
+i=0
+while flag:
+    choise=input("What would you like? (espresso/latte/cappuccino): ").lower()
+    if choise=="report":
+        print_total()
+    elif choise=="espresso":
+        if is_have(choise)==True and coins_enough(choise)==True:
+            print("Here is your espresso")
+    elif choise=="latte":
+        if is_have(choise)==True and coins_enough(choise)==True:
+            print("Here is your latte")
+    elif choise=="cappuccino":
+        if is_have(choise)==True and coins_enough(choise)==True:
+            print("Here is your cappuccino")
+    else:
+        print("Wrong choise. Try again")
+        flag=False
+            
+            
+
+
+            
+            
+        
+        
+
